@@ -1,7 +1,9 @@
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.http.HttpClient;
 import java.util.Scanner;
 
 /**
@@ -20,7 +22,7 @@ public final class JokeFetcher {
      *
      * @param jokeId e.g., "R7UfaahVfFd"
      */
-    public void printJokeText(String jokeId) {
+    public String printJokeText(String jokeId, HttpClient client) throws ConnectException {
         URL url;
         try {
             url = new URL("https://icanhazdadjoke.com/j/" + jokeId);
@@ -31,15 +33,17 @@ public final class JokeFetcher {
         try {
             connection = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
-            System.out.println("Cannot connect to jokes server.");
-            return;
+            //System.out.println("Cannot connect to jokes server.");
+            throw new ConnectException("couldn't connect to jokes server.");
         }
         connection.setRequestProperty("Accept", "text/plain");
         try (var connectionStream = connection.getInputStream();
              var s = new Scanner(connectionStream).useDelimiter("\\A")) {
-            System.out.println(s.next());
+            //System.out.println(s.next());
+            return s.next();
         } catch (IOException e) {
-            System.out.println("Cannot fetch jokes.");
+            //System.out.println("Cannot fetch jokes.");
+            throw new RuntimeException("Cannot fetch jokes.");
         }
     }
 }

@@ -4,7 +4,10 @@ public class WeatherService {
     private final HttpClient httpClient;
 
     public WeatherService() {
-        httpClient = new RealHttpClient();
+        this.httpClient = new RealHttpClient();
+    }
+    public WeatherService(HttpClient client) {
+        httpClient = client;
     }
 
     public Weather getWeatherToday() {
