@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public final class JokeFetcher {
     /**
-     * Prints the joke with the specific ID to the console.
+     * Prints the joke with the specified ID to the console.
      *
      * @param jokeId e.g., "R7UfaahVfFd"
      */
@@ -42,8 +42,10 @@ public final class JokeFetcher {
             //System.out.println(s.next());
             return s.next();
         } catch (IOException e) {
+
             //System.out.println("Cannot fetch jokes.");
             throw new RuntimeException("Cannot fetch jokes.");
+            System.out.println("Cannot fetch joke.");
         }
     }
 }
